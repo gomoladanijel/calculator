@@ -51,6 +51,7 @@ operators.forEach(operator => {
 
         if (exp.length === 3) {
             operate();
+            isResultDisplayed = false;
             display.textContent += " " + operator.textContent + " ";
         } else {
             display.textContent += " " + operator.textContent + " ";
