@@ -1,1 +1,2 @@
 # calculator
+This is a very simple calculator that supports basic arithmetic operations. In the future, more features will be added that will not affect the complexity of the application itself, so the calculator will stay pretty simple and easy to use.
