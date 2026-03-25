@@ -27,6 +27,7 @@ body {
 
 .display {
     width: 100%;
+    max-width: 316px;
     height: 64px;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
@@ -36,6 +37,8 @@ body {
     display: flex;
     align-items: center;
     padding-left: 8px;
+    overflow-x: auto;
+    white-space: nowrap;
 }
 
 .buttons-container {
