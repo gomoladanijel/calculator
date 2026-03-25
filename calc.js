@@ -3,6 +3,7 @@ const digits = document.querySelectorAll(".digit");
 const decimal = document.querySelector(".decimal");
 const operators = document.querySelectorAll(".operator");
 const clearBtn = document.querySelector(".clear");
+const undoBtn = document.querySelector(".backspace");
 const equalBtn = document.querySelector(".equal");
 
 let isResultDisplayed = false;
@@ -28,7 +29,7 @@ decimal.addEventListener("click", () => {
     lastChunk === "" || isLastCharOp
         ? display.textContent += "0." 
         : display.textContent += decimal.textContent;
-})
+});
 
 operators.forEach(operator => {
     operator.addEventListener("click", () => {
@@ -61,10 +62,19 @@ clearBtn.addEventListener("click", () => {
     digits.forEach(digit => digit.disabled = false);
     decimal.disabled = false;
     operators.forEach(operator => operator.disabled = false);
+    undoBtn.disabled = false;
 
     display.style.color = "#fff";
     display.style.fontSize = "32px";
     display.textContent = "";
+});
+
+undoBtn.addEventListener("click", () => {
+    if (display.textContent.endsWith(" ")) {
+        display.textContent = display.textContent.slice(0, -3);
+    } else {
+        display.textContent = display.textContent.slice(0, -1);
+    }
 });
 
 equalBtn.addEventListener("click", operate);
@@ -109,4 +119,5 @@ function operate() {
 function disableButtons() {
     digits.forEach(digit => digit.disabled = true);
     operators.forEach(operator => operator.disabled = true);
+    undoBtn.disabled = true;
 }
