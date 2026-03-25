@@ -64,10 +64,9 @@ button {
     cursor: pointer;
 }
 
-.clear,
-.sqrt,
-.percentage {
+.clear {
     background-color: #565d64;
+    margin-right: auto;
 }
 
 .operator,
@@ -85,9 +84,7 @@ button {
     font-weight: bold;
 }
 
-.clear:hover,
-.sqrt:hover,
-.percentage:hover {
+.clear:hover {
     background-color: #454c53;
 }
 
@@ -102,9 +99,7 @@ button {
     background-color: #172029;
 }
 
-.clear:active,
-.sqrt:active,
-.percentage:active {
+.clear:active {
     background-color: #565d64;
 }
 
