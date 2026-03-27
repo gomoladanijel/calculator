@@ -38,10 +38,7 @@ operators.forEach(operator => {
         const isLastCharOp = ["+", "−", "×", "÷"].includes(display.textContent.trim().slice(-1));
 
         if (exp[0] === "×" || exp[0] === "÷" || isLastCharOp) {
-            display.style.fontSize = "24px";
-            display.style.color = "#ff2600";
-            display.textContent = "Malformed expression";
-            disableButtons();
+            handleInvalidExpression();
             return;
         }
 
@@ -83,10 +80,7 @@ equalBtn.addEventListener("click", () => {
     const isLastCharOpMD = ["×", "÷"].includes(display.textContent.trim().slice(-1));
 
     if (exp[0] === "×" || exp[0] === "÷" || isLastCharOpMD) {
-        display.style.fontSize = "24px";
-        display.style.color = "#ff2600";
-        display.textContent = "Malformed expression";
-        disableButtons();
+        handleInvalidExpression();
         return;
     } else {
         operate();
@@ -113,10 +107,7 @@ function operate() {
             break;
         case "÷":
             if (n2 === 0) {
-                display.style.fontSize = "24px";
-                display.style.color = "#ff9500";
-                display.textContent = "Cannot divide by zero";
-                disableButtons();
+                handleDivisionByZero();
                 return;
             } else {
                 result = n1 / n2;
@@ -128,6 +119,20 @@ function operate() {
     
     display.textContent = Math.round(result * 100) / 100;
     isResultDisplayed = true;
+}
+
+function handleInvalidExpression() {
+    display.style.fontSize = "24px";
+    display.style.color = "#ff2600";
+    display.textContent = "Malformed expression";
+    disableButtons();
+}
+
+function handleDivisionByZero() {
+    display.style.fontSize = "24px";
+    display.style.color = "#ff9500";
+    display.textContent = "Cannot divide by zero";
+    disableButtons();
 }
 
 function disableButtons() {
