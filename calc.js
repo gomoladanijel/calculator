@@ -33,26 +33,37 @@ decimal.addEventListener("click", () => {
 
 operators.forEach(operator => {
     operator.addEventListener("click", () => {
-        isResultDisplayed = false;
-        const exp = display.textContent.trim().split(" ");
-        const isLastCharOp = ["+", "−", "×", "÷"].includes(display.textContent.trim().slice(-1));
+        const currentContent = display.textContent.trim()
+        const opChar = operator.textContent;
 
-        if (exp[0] === "×" || exp[0] === "÷" || isLastCharOp) {
-            handleInvalidExpression();
+        if (currentContent === "") {
+            if (opChar === "−" || opChar === "+") {
+                display.textContent = opChar;
+            }
+            
             return;
         }
 
-        if (exp[0] === "+" || exp[0] === "−") operate();
+        const endsWithBinOp = currentContent.endsWith(" +") || currentContent.endsWith(" −") || currentContent.endsWith(" ×") || currentContent.endsWith(" ÷");
 
-        if (exp[1] === "÷" && exp[2] === "0") operate();
-
-        if (exp.length === 3) {
-            operate();
-            isResultDisplayed = false;
-            display.textContent += " " + operator.textContent + " ";
-        } else {
-            display.textContent += " " + operator.textContent + " ";
+        if (endsWithBinOp) {
+            if (opChar === "−" || opChar === "+") {
+                display.textContent += opChar;
+            } else {
+                handleInvalidExpression();
+            }
+            
+            return;
         }
+
+        const separatedParts = currentContent.split(" ");
+
+        if (separatedParts.length === 3) {
+            operate();
+        }
+
+        display.textContent += " " + opChar + " ";
+        isResultDisplayed = false;
     });
 });
 
@@ -88,10 +99,16 @@ equalBtn.addEventListener("click", () => {
 });
 
 function operate() {
-    const nums = display.textContent.split(/[÷×−+]/);
-    const n1 = +nums[0];
-    const n2 = +nums[1];
-    const op = display.textContent.match(/[÷×−+]/).toString();
+    const content = display.textContent.trim();
+    const opMatch = content.slice(1).match(/[÷×−+]/);
+
+    if (!opMatch) return;
+
+    const op = opMatch[0];
+    const opIndex = content.indexOf(op, 1);
+
+    const n1 = parseFloat(content.substring(0, opIndex).replace("−", "-"));
+    const n2 = parseFloat(content.substring(opIndex + 1).replace("−", "-"));
 
     let result;
 
