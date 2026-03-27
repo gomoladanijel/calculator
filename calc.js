@@ -78,7 +78,20 @@ undoBtn.addEventListener("click", () => {
     }
 });
 
-equalBtn.addEventListener("click", operate);
+equalBtn.addEventListener("click", () => {
+    const exp = display.textContent.trim().split(" ");
+    const isLastCharOpMD = ["×", "÷"].includes(display.textContent.trim().slice(-1));
+
+    if (exp[0] === "×" || exp[0] === "÷" || isLastCharOpMD) {
+        display.style.fontSize = "24px";
+        display.style.color = "#ff2600";
+        display.textContent = "Malformed expression";
+        disableButtons();
+        return;
+    } else {
+        operate();
+    }
+});
 
 function operate() {
     const nums = display.textContent.split(/[÷×−+]/);
