@@ -90,7 +90,7 @@ equalBtn.addEventListener("click", () => {
     const exp = display.textContent.trim().split(" ");
     const isLastCharOpMD = ["×", "÷"].includes(display.textContent.trim().slice(-1));
 
-    if (exp[0] === "×" || exp[0] === "÷" || isLastCharOpMD) {
+    if (exp[0] === "×" || exp[0] === "÷" || isLastCharOpMD || isExpressionIncomplete()) {
         handleInvalidExpression();
         return;
     } else {
@@ -136,6 +136,14 @@ function operate() {
     
     display.textContent = Math.round(result * 100) / 100;
     isResultDisplayed = true;
+}
+
+function isExpressionIncomplete() {
+    const content = display.textContent.trim();
+    const parts = content.split(" ");
+    const lastPart = parts[parts.length - 1];
+
+    return ["+", "−", "×", "÷"].includes(lastPart) || lastPart === "−";
 }
 
 function handleInvalidExpression() {
