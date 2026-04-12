@@ -59,7 +59,12 @@ operators.forEach(operator => {
         const separatedParts = currentContent.split(" ");
 
         if (separatedParts.length === 3) {
-            operate();
+            if (isNaN(currentContent)) {
+                handleInvalidExpression();
+                return;
+            } else {
+                operate();
+            }
         }
 
         display.textContent += " " + opChar + " ";
@@ -107,8 +112,13 @@ function operate() {
     const op = opMatch[0];
     const opIndex = content.indexOf(op, 1);
 
-    const n1 = parseFloat(content.substring(0, opIndex).replace("−", "-"));
-    const n2 = parseFloat(content.substring(opIndex + 1).replace("−", "-"));
+    const n1 = parseFloat(content.substring(0, opIndex).replace(/−/g, "-"));
+    const n2 = parseFloat(content.substring(opIndex + 1).replace(/−/g, "-"));
+
+    if (isNaN(n1) || isNaN(n2)) {
+        handleInvalidExpression();
+        return;
+    }
 
     let result;
 
